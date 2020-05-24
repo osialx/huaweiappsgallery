@@ -1,0 +1,21 @@
+plugins {
+    id 'java'
+}
+
+group 'org.example'
+version '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    def apacheComponents = '4.5.6'
+    compile "org.apache.httpcomponents:httpclient:${apacheComponents}"
+    compile "org.apache.httpcomponents:httpmime:${apacheComponents}"
+    compile "com.alibaba:fastjson:1.2.9"
+
+
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
