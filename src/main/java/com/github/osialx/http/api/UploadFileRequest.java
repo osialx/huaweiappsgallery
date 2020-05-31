@@ -56,6 +56,7 @@ public class UploadFileRequest implements ApiRequest<List<FileInfo>> {
                 .addTextBody("authCode", fileUploadingMeta.getAuthCode())
                 .addTextBody("fileCount", "1")
                 .addTextBody("parseType", "1")
+                .addTextBody("name", "build.apk")
                 .build());
 
         return post;

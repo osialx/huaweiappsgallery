@@ -1,9 +1,10 @@
-
 package com.github.osialx.http.model;
 
-public class FileInfo {
+public class PublishFileInfo {
 
-    private String fileDestUlr;
+    private String fileName;
+
+    private String fileDestUrl;
 
     private String imageResolution;
 
@@ -11,12 +12,12 @@ public class FileInfo {
 
     private int size;
 
-    public String getFileDestUlr() {
-        return fileDestUlr;
+    public String getFileDestUrl() {
+        return fileDestUrl;
     }
 
-    public void setFileDestUlr(String fileDestUlr) {
-        this.fileDestUlr = fileDestUlr;
+    public void setFileDestUrl(String fileDestUrl) {
+        this.fileDestUrl = fileDestUrl;
     }
 
     public String getImageResolution() {
@@ -41,5 +42,13 @@ public class FileInfo {
 
     public void setSize(int size) {
         this.size = size;
+    }
+
+    public String getFileName() {
+        return fileName;
+    }
+
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
     }
 }
