@@ -1,10 +1,13 @@
-package com.github.osialx.http.download;
+package com.github.osialx.http.content;
 
+import com.github.osialx.ArrayUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpException;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.entity.mime.content.ContentBody;
+import org.apache.http.entity.mime.content.InputStreamBody;
 import org.apache.http.impl.client.HttpClients;
 
 import java.io.BufferedInputStream;
@@ -15,10 +18,21 @@ import java.io.InputStreamReader;
 import java.net.URI;
 import java.util.stream.Collectors;
 
-public class PlainDownloadingStrategy implements DownloadingStrategy {
+public class RemoteContentBodyProducer implements ContentBodyProducer {
+
+    private final URI uri;
+
+    public RemoteContentBodyProducer(URI uri) {
+        this.uri = uri;
+    }
 
     @Override
-    public InputStream download(URI uri) throws HttpException, IOException {
+    public ContentBody getContent() throws HttpException, IOException {
+        String last = ArrayUtils.getLast(uri.getPath().split("/"));
+        return new InputStreamBody(getRemoteStream(), last);
+    }
+
+    private InputStream getRemoteStream() throws IOException, HttpException {
         HttpResponse response = HttpClients.createDefault().execute(new HttpGet(uri));
 
         final int statusCode = response.getStatusLine().getStatusCode();
