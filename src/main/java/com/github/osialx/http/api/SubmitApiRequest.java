@@ -1,8 +1,8 @@
 package com.github.osialx.http.api;
 
-import com.alibaba.fastjson.JSONObject;
 import com.github.osialx.http.ApiRequest;
 import com.github.osialx.http.JsonApiResponseProcessor;
+import com.google.gson.JsonElement;
 import org.apache.http.HttpException;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -11,7 +11,7 @@ import org.apache.http.client.methods.RequestBuilder;
 
 import java.io.IOException;
 
-public class SubmitApiRequest implements ApiRequest<JSONObject> {
+public class SubmitApiRequest implements ApiRequest<JsonElement> {
 
     private final String appId;
     private final String remark;
@@ -36,7 +36,7 @@ public class SubmitApiRequest implements ApiRequest<JSONObject> {
     }
 
     @Override
-    public JSONObject process(HttpResponse response) throws IOException, HttpException {
-        return new JsonApiResponseProcessor<JSONObject>(null).process(response);
+    public JsonElement process(HttpResponse response) throws IOException, HttpException {
+        return new JsonApiResponseProcessor<JsonElement>(null).process(response);
     }
 }

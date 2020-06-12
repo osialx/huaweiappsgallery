@@ -1,9 +1,11 @@
 package com.github.osialx.http.api;
 
-import com.alibaba.fastjson.JSONObject;
 import com.github.osialx.http.ApiRequest;
 import com.github.osialx.http.JsonApiResponseProcessor;
 import com.github.osialx.http.model.PublishFileInfo;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPut;
 import org.apache.http.client.methods.HttpUriRequest;
@@ -13,7 +15,7 @@ import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.List;
 
-public class UpdateFileInfoRequest implements ApiRequest<JSONObject> {
+public class UpdateFileInfoRequest implements ApiRequest<JsonElement> {
 
     private final String appId;
     private final List<PublishFileInfo> files;
@@ -27,9 +29,10 @@ public class UpdateFileInfoRequest implements ApiRequest<JSONObject> {
     public HttpUriRequest buildHttpRequest(String baseUrl) {
         HttpPut put = new HttpPut(baseUrl + "/publish/v2/app-file-info?appId=" + appId);
 
-        JSONObject keyString = new JSONObject();
-        keyString.put("files", files);
-        keyString.put("fileType", 5);
+        Gson gson = new Gson();
+        JsonObject keyString = new JsonObject();
+        keyString.add("files", gson.toJsonTree(files));
+        keyString.addProperty("fileType", 5);
 
         StringEntity entity = new StringEntity(keyString.toString(), Charset.forName("UTF-8"));
         entity.setContentEncoding("UTF-8");
@@ -40,7 +43,7 @@ public class UpdateFileInfoRequest implements ApiRequest<JSONObject> {
     }
 
     @Override
-    public JSONObject process(HttpResponse response) throws IOException {
-        return (JSONObject) new JsonApiResponseProcessor(JSONObject.class).process(response);
+    public JsonElement process(HttpResponse response) throws IOException {
+        return (JsonElement) new JsonApiResponseProcessor(JsonElement.class).process(response);
     }
 }

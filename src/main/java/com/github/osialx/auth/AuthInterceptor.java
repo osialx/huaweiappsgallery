@@ -10,11 +10,11 @@ public class AuthInterceptor implements HttpRequestInterceptor {
 
     private String token;
 
-    private String domain;
-    private String clientId;
-    private String clientSecret;
+    private final String domain;
+    private final String clientId;
+    private final String clientSecret;
 
-    private AuthTokenProvider authTokenProvider;
+    private final AuthTokenProvider authTokenProvider;
 
     public AuthInterceptor(String domain, String clientId, String clientSecret, AuthTokenProvider authTokenProvider) {
         this.domain = domain;

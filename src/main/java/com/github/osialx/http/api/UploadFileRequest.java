@@ -1,9 +1,9 @@
 package com.github.osialx.http.api;
 
-import com.alibaba.fastjson.JSON;
 import com.github.osialx.ArrayUtils;
 import com.github.osialx.http.ApiRequest;
 import com.github.osialx.http.HuaweiAppsGalleryApiClient;
+import com.github.osialx.http.JsonApiResponseProcessor;
 import com.github.osialx.http.download.DownloadingStrategy;
 import com.github.osialx.http.model.FileInfo;
 import com.github.osialx.http.model.FileServerOriResult;
@@ -17,7 +17,6 @@ import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.ContentBody;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.InputStreamBody;
-import org.apache.http.util.EntityUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -90,13 +89,12 @@ public class UploadFileRequest implements ApiRequest<List<FileInfo>> {
 
     @Override
     public List<FileInfo> process(HttpResponse response) throws IOException, HttpException {
-        String text = EntityUtils.toString(response.getEntity(), "UTF-8");
+        FileServerOriResult result = new JsonApiResponseProcessor<FileServerOriResult>(FileServerOriResult.class)
+                .process(response);
 
-        FileServerOriResult fileServerResult = JSON.parseObject(text, FileServerOriResult.class);
-        if (!"0".equals(fileServerResult.getResult().getResultCode())) {
-            throw new HttpException("Failed to load file. Reason: " + text);
+        if (!"0".equals(result.getResult().getResultCode())) {
+            throw new HttpException("Failed to load file. Reason: " + result);
         }
-
-        return fileServerResult.getResult().getUploadFileRsp().getFileInfoList();
+        return result.getResult().getUploadFileRsp().getFileInfoList();
     }
 }
