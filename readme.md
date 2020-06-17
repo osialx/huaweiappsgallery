@@ -8,22 +8,21 @@ Official API documentation [here](https://developer.huawei.com/consumer/en/doc/d
 ```$java
 HuaweiAppsGalleryApiClient appsGalleryApiClient = new HuaweiApiFactory().appsGallery(clientId, clientSecret);
 
-List<FileInfo> files = appsGalleryApiClient.executeRequest(new UploadFileRequest(
-    appId,
-    Suffix.APK,
-    URI.create("file:///build.apk"),
-    appsGalleryApiClient,
-    new PlainDownloadingStrategy()
-));
+        List<FileInfo> files = appsGalleryApiClient.executeRequest(new UploadFileRequest(
+                appId,
+                new FileContentBodyProducer("build.apk"),
+                Suffix.APK,
+                appsGalleryApiClient
+        ));
 
-FileInfoConverter converter = new FileInfoConverter();
-List<PublishFileInfo> publishFileInfos = files.stream()
-    .map(converter::convert)
-    .peek(i -> i.setFileName("build.apk"))
-    .collect(Collectors.toList());
+        FileInfoConverter converter = new FileInfoConverter();
+        List<PublishFileInfo> publishFileInfos = files.stream()
+                .map(converter::convert)
+                .peek(i -> i.setFileName("build.apk"))
+                .collect(Collectors.toList());
 
-JSONObject updateFiles = appsGalleryApiClient.executeRequest(new UpdateFileInfoRequest(appId, publishFileInfos));
+        JsonElement updateFiles = appsGalleryApiClient.executeRequest(new UpdateFileInfoRequest(appId, publishFileInfos));
 
-String notes = "Release notes here";
-JSONObject submit = appsGalleryApiClient.executeRequest(new SubmitApiRequest(appId, notes));
+        String notes = "Release notes here";
+        JsonElement submit = appsGalleryApiClient.executeRequest(new SubmitApiRequest(appId, notes));
 ```
