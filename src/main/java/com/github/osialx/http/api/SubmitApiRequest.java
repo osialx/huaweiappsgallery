@@ -3,7 +3,6 @@ package com.github.osialx.http.api;
 import com.github.osialx.http.ApiRequest;
 import com.github.osialx.http.JsonApiResponseProcessor;
 import com.google.gson.JsonElement;
-import org.apache.http.HttpException;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
@@ -36,7 +35,7 @@ public class SubmitApiRequest implements ApiRequest<JsonElement> {
     }
 
     @Override
-    public JsonElement process(HttpResponse response) throws IOException, HttpException {
-        return new JsonApiResponseProcessor<JsonElement>(null).process(response);
+    public JsonElement process(HttpResponse response) throws IOException {
+        return new JsonApiResponseProcessor<JsonElement>(JsonElement.class).process(response);
     }
 }

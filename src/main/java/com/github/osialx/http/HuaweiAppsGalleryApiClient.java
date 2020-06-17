@@ -5,7 +5,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.client.utils.HttpClientUtils;
-import org.apache.http.impl.client.CloseableHttpClient;
 
 import java.io.IOException;
 
@@ -14,7 +13,7 @@ public class HuaweiAppsGalleryApiClient {
     private final String baseUrl;
     private final HttpClient httpClient;
 
-    public HuaweiAppsGalleryApiClient(String baseUrl, CloseableHttpClient httpClient) {
+    public HuaweiAppsGalleryApiClient(String baseUrl, HttpClient httpClient) {
         this.baseUrl = baseUrl;
         this.httpClient = httpClient;
     }

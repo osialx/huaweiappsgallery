@@ -1,6 +1,8 @@
 
 package com.github.osialx.http.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.util.List;
 
 public class FileServerOriResult {
@@ -34,6 +36,7 @@ public class FileServerOriResult {
 
         private String resultCode;
 
+        @SerializedName("UploadFileRsp")
         private UploadFileRsp uploadFileRsp;
     }
 

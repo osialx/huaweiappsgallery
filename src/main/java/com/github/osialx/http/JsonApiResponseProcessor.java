@@ -22,6 +22,6 @@ public class JsonApiResponseProcessor<T> implements ApiResponseProcessor<T> {
     @Override
     public T process(HttpResponse response) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), Consts.UTF_8));
-        return gson.fromJson(br.readLine(), type);
+        return gson.fromJson(br, type);
     }
 }
