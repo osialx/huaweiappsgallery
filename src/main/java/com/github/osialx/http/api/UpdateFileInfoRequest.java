@@ -12,7 +12,7 @@ import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.entity.StringEntity;
 
 import java.io.IOException;
-import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 
 public class UpdateFileInfoRequest implements ApiRequest<JsonElement> {
@@ -34,7 +34,7 @@ public class UpdateFileInfoRequest implements ApiRequest<JsonElement> {
         keyString.add("files", gson.toJsonTree(files));
         keyString.addProperty("fileType", 5);
 
-        StringEntity entity = new StringEntity(keyString.toString(), Charset.forName("UTF-8"));
+        StringEntity entity = new StringEntity(keyString.toString(), StandardCharsets.UTF_8);
         entity.setContentEncoding("UTF-8");
         entity.setContentType("application/json");
         put.setEntity(entity);
@@ -44,6 +44,6 @@ public class UpdateFileInfoRequest implements ApiRequest<JsonElement> {
 
     @Override
     public JsonElement process(HttpResponse response) throws IOException {
-        return (JsonElement) new JsonApiResponseProcessor(JsonElement.class).process(response);
+        return (JsonElement) new JsonApiResponseProcessor<>(JsonElement.class).process(response);
     }
 }

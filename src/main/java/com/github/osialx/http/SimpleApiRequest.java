@@ -15,7 +15,7 @@ public class SimpleApiRequest<T> implements ApiRequest<T> {
 
     public SimpleApiRequest(final Function<String, HttpUriRequest> httpUriRequestSupplier, Type type) {
         this.httpUriRequestSupplier = httpUriRequestSupplier;
-        this.apiResponseProcessor = new JsonApiResponseProcessor(type);
+        this.apiResponseProcessor = new JsonApiResponseProcessor<>(type);
     }
 
     @Override
